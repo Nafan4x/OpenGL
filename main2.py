@@ -38,6 +38,11 @@ def init_pygame_opengl():
     glOrtho(-1.5, 1.5, -1.5, 1.5, -1, 1)
     glMatrixMode(GL_MODELVIEW)
 
+def random_color():
+    #print([random.random() for _ in range(3)])
+    a = [0.471263322161369, 0.2974430471189735, 0.8830779091187262]
+    return a
+
 
 def draw_task3():
     glBegin(GL_LINE_STRIP)  # Начинаем рисовать замкнутую ломаную линию
@@ -61,10 +66,163 @@ def draw_task4():
     glVertex2f(-1, 0.2)
     glVertex2f(-0.7, -0.7)
     glVertex2f(0.2, -1)
+    glEnd()
 
+def draw_triangle_fan():
+    glBegin(GL_TRIANGLE_FAN)
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(1, 0)  # Вторая вершина
+
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(1, 0.7)  # Третья вершина
+
+    glColor3f(0.5, 0.5, 0.0)
+    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+
+    glColor3f(0, 0.5, 0.5)
+    glVertex2f(-0.4, 0.7)
+
+    glColor3f(0.5, 0, 0.5)
+    glVertex2f(-1, 0.2)
+
+    glColor3f(1, 1, 1)
+    glVertex2f(-0.7, -0.7)
+
+    glColor3f(0.2, 0.7, 0.4)
+    glVertex2f(0.2, -1)
+    glEnd()
+
+def draw_triangle_strip():
+    glBegin(GL_TRIANGLE_STRIP)
+
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(1, 0)  # Вторая вершина
+
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(1, 0.7)  # Третья вершина
+
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+
+    glColor3f(0.5, 0.5, 0.0)
+    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+
+    glColor3f(0, 0.5, 0.5)
+    glVertex2f(-0.4, 0.7)
+
+    glColor3f(0.5, 0, 0.5)
+    glVertex2f(-1, 0.2)
+
+    glColor3f(1, 1, 1)
+    glVertex2f(-0.7, -0.7)
+
+    glColor3f(0.2, 0.7, 0.4)
+    glVertex2f(0.2, -1)
+    glEnd()
+
+def draw_triangle_simple():
+    glBegin(GL_TRIANGLES)
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(1, 0)  # Вторая вершина
+    glVertex2f(1, 0.7)  # Третья вершина
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(1, 0.7)  # Третья вершина
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+    glVertex2f(-0.4, 0.7)
+
+    glColor3f(0, 0.5, 0.5)
+    glVertex2f(-0.4, 0.7)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(-1, 0.2)
+
+    glColor3f(1, 1, 1)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(-1, 0.2)
+    glVertex2f(-0.7, -0.7)
+
+    glColor3f(0.2, 0.7, 0.4)
+    glVertex2f(-0.7, -0.7)
+    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.2, -1)
+    glEnd()
+
+def draw_task7():
+    glBegin(GL_TRIANGLES)
+    glColor3f(1.0, 0.0, 0.0)
+    glVertex2f(0.3, -1)
+    glVertex2f(1, -1)
+    glVertex2f(0.8, 1)
+
+    glColor3f(0.0, 1.0, 0.0)
+    glVertex2f(0.3, -1)
+    glVertex2f(0.3, 0)
+    glVertex2f(0.8, 1)
+
+    glColor3f(0.0, 0.0, 1.0)
+    glVertex2f(-0.1, 0.3)
+    glVertex2f(0.3, 0)
+    glVertex2f(0.8, 1)
+
+    glColor3f(0.5, 0.5, 0.0)
+    glVertex2f(-0.1, 0.3)
+    glVertex2f(0.3, 0)
+    glVertex2f(0.0, 0)
+
+    glColor3f(0.471263322161369, 0.2974430471189735, 0.8830779091187262)
+    glVertex2f(-1, 0.7)
+    glVertex2f(-0.1, 0.3)
+    glVertex2f(0.0, 0)
+
+    glColor3f(0, 0.5, 0.5)
+    glVertex2f(-1, 0.7)
+    glVertex2f(-1, 0.2)
+    glVertex2f(0.0, 0)
+
+    glColor3f(0.5, 0, 0.5)
+    glVertex2f(-0.6, -0.5)
+    glVertex2f(-1, 0.2)
+    glVertex2f(-1, -1)
+
+    glColor3f(1, 1, 1)
+    glVertex2f(-0.6, -0.5)
+    glVertex2f(0, -1)
+    glVertex2f(-1, -1)
+
+    glColor3f(0.2, 0.7, 0.4)
+    glVertex2f(-0.6, -0.5)
+    glVertex2f(0, 0)
+    glVertex2f(-1, 0.2)
+
+    glEnd()
+def draw_task6(n, radius=0.5):
+    angle_step = 2 * pi / n  # Шаг угла для каждой вершины
+    glBegin(GL_TRIANGLE_FAN)
+
+    # Центральная вершина многоугольника
+    glColor3fv(random_color())
+    glVertex2f(0.0, 0.0)  # Центр
+
+    # Вершины многоугольника по окружности
+    for i in range(n + 1):  # Проходим по каждой вершине (n + 1 чтобы замкнуть фигуру)
+        angle = i * angle_step
+        x = radius * cos(angle)
+        y = radius * sin(angle)
+        glColor3fv(random_color())  # Новый цвет для каждой вершины
+        glVertex2f(x, y)
 
     glEnd()
 
+# Функция для отрисовки через ленту треугольников
 def draw_points(vertices, point_size):
     glPointSize(point_size)
     glBegin(GL_POINTS)
@@ -81,16 +239,20 @@ def draw_polygon(vertices):
         glVertex2f(vertex[0], vertex[1])
     glEnd()
 
+
 def main():
     n = 6 # Количество вершин n-угольника
     radius = 0.5  # Радиус многоугольника
     point_size = 10  # Начальный размер точек
     max_point_size = 50  # Максимальный размер точек для эксперимента
 
+    task5_versions = [draw_triangle_fan, draw_triangle_strip]
+
     init_pygame_opengl()
     vertices = compute_polygon_vertices(n, radius)
 
     task = 0
+    version = 0
     running = True
     while running:
         for event in pygame.event.get():
@@ -108,27 +270,58 @@ def main():
                     task = 3
                 if event.key == pygame.K_4:
                     task = 4
+                if event.key == pygame.K_5:
+                    task = 5
+                if event.key == pygame.K_6:
+                    task = 6
+                if event.key == pygame.K_7:
+                    task = 7
+                if event.key == pygame.K_q:
+                    glShadeModel(GL_SMOOTH)
+                if event.key == pygame.K_w:
+                    glShadeModel(GL_FLAT)
+
+                if task == 5:
+                    if event.key == pygame.K_a:
+                        version = 0
+                    if event.key == pygame.K_s:
+                        version = 1
+                    if event.key == pygame.K_d:
+                        version = 2
+
 
                 elif event.key == pygame.K_UP:
                     point_size += 1  # Увеличиваем размер точек
                 elif event.key == pygame.K_DOWN:
                     point_size = max(1, point_size - 1)  # Уменьшаем размер точек
 
+
+
         # Очистка экрана
-        if task == 0:
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        elif task == 1:
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        if task == 1:
             draw_points(vertices, point_size)
         elif task == 2:
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             draw_polygon(vertices)
         elif task == 3:
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             draw_task3()
         elif task == 4:
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
             draw_task4()
+        elif task == 5:
+            draw_triangle_fan()
+            if version == 0:
+                draw_triangle_fan()
+            if version == 1:
+                draw_triangle_strip()
+            if version == 2:
+                draw_triangle_simple()
+        elif task == 6:
+            draw_task6(n,radius)
+
+
+        elif task == 7:
+            draw_task7()
+
 
 
 
