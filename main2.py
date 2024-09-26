@@ -1,18 +1,70 @@
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
+from OpenGL.GL.shaders import compileProgram, compileShader
 from math import cos, sin, pi
 
 
-def clear_draw():
-    pass
+
+# Компилируем шейдеры
+def compile_shadersVBO():
+    vertex_shader_source = """
+    #version 330 core
+    layout(location = 0) in vec3 position;
+    layout(location = 1) in vec3 color;
+    out vec3 fragColor;
+    void main()
+    {
+        gl_Position = vec4(position, 1.0);
+        fragColor = color;
+    }
+    """
+
+    fragment_shader_source = """
+    #version 330 core
+    in vec3 fragColor;
+    out vec4 finalColor;
+    void main()
+    {
+        finalColor = vec4(fragColor, 1.0);
+    }
+    """
+
+    vertex_shader = compileShader(vertex_shader_source, GL_VERTEX_SHADER)
+    fragment_shader = compileShader(fragment_shader_source, GL_FRAGMENT_SHADER)
+    shader_program = compileProgram(vertex_shader, fragment_shader)
+    return shader_program
+
+# Компилируем шейдеры
+def compile_shaders():
+    vertex_shader_source = """
+    #version 330
+    layout(location = 0) in vec2 position;
+    void main()
+    {
+        gl_Position = vec4(position, 0.0, 1.0);
+    }
+    """
+    fragment_shader_source = """
+    #version 330
+    out vec4 FragColor;
+    void main()
+    {
+        FragColor = vec4(0.0, 1.0, 0.0, 1.0);  // Зеленый цвет
+    }
+    """
+
+    vertex_shader = compileShader(vertex_shader_source, GL_VERTEX_SHADER)
+    fragment_shader = compileShader(fragment_shader_source, GL_FRAGMENT_SHADER)
+    shader_program = compileProgram(vertex_shader, fragment_shader)
+    return shader_program
 
 # Функция для вычисления координат вершин правильного n-угольника
 def compute_polygon_vertices(n, radius):
     vertices = []
     for i in range(n):
         # Угол для каждой вершины
-        angle = 2 * pi * i / n  # равномерное распределение углов
+        angle = 2 * pi * i / n
         print(angle)
         x = radius * cos(angle)
         y = radius * sin(angle)
@@ -37,6 +89,9 @@ def init_pygame_opengl():
     glLoadIdentity()
     glOrtho(-1.5, 1.5, -1.5, 1.5, -1, 1)
     glMatrixMode(GL_MODELVIEW)
+
+    # Компилируем и используем шейдеры
+
 
 def random_color():
     #print([random.random() for _ in range(3)])
@@ -209,7 +264,7 @@ def draw_task6(n, radius=0.5):
     glBegin(GL_TRIANGLE_FAN)
 
     # Центральная вершина многоугольника
-    glColor3fv(random_color())
+    #glColor3fv(0.471263322161369, 0.2974430471189735, 0.8830779091187262)
     glVertex2f(0.0, 0.0)  # Центр
 
     # Вершины многоугольника по окружности
@@ -217,7 +272,7 @@ def draw_task6(n, radius=0.5):
         angle = i * angle_step
         x = radius * cos(angle)
         y = radius * sin(angle)
-        glColor3fv(random_color())  # Новый цвет для каждой вершины
+        #glColor3fv(0.471263322161369, 0.2974430471189735, 0.8830779091187262)  # Новый цвет для каждой вершины
         glVertex2f(x, y)
 
     glEnd()
@@ -233,8 +288,8 @@ def draw_points(vertices, point_size):
 
 # Функция для рисования многоугольника с помощью линий
 def draw_polygon(vertices):
-    glBegin(GL_LINE_LOOP)  # Рисуем замкнутую ломаную линию
-    glColor3f(1.0, 1.0, 1.0)  # Красный цвет линий
+    glBegin(GL_LINE_LOOP)
+    glColor3f(1.0, 1.0, 1.0)
     for vertex in vertices:
         glVertex2f(vertex[0], vertex[1])
     glEnd()
@@ -254,6 +309,7 @@ def main():
     task = 0
     version = 0
     running = True
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -261,20 +317,36 @@ def main():
 
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 1
                 if event.key == pygame.K_2:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 2
                 if event.key == pygame.K_0:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 0
                 if event.key == pygame.K_3:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 3
                 if event.key == pygame.K_4:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 4
                 if event.key == pygame.K_5:
+                    shader_program = compile_shadersVBO()
+                    glUseProgram(shader_program)
                     task = 5
                 if event.key == pygame.K_6:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 6
                 if event.key == pygame.K_7:
+                    shader_program = compile_shaders()
+                    glUseProgram(shader_program)
                     task = 7
                 if event.key == pygame.K_q:
                     glShadeModel(GL_SMOOTH)
@@ -299,6 +371,7 @@ def main():
 
         # Очистка экрана
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
         if task == 1:
             draw_points(vertices, point_size)
         elif task == 2:
