@@ -163,29 +163,29 @@ def draw_triangle_simple():
 def draw_task7():
     glBegin(GL_TRIANGLES)
     glColor3f(1.0, 0.0, 0.0)
-    glVertex2f(0.3, -1)
     glVertex2f(1, -1)
+    glVertex2f(0.3, -1)
     glVertex2f(0.8, 1)
 
     glColor3f(0.0, 1.0, 0.0)
     glVertex2f(0.3, -1)
-    glVertex2f(0.3, 0)
     glVertex2f(0.8, 1)
+    glVertex2f(0.3, 0)
 
     glColor3f(0.0, 0.0, 1.0)
-    glVertex2f(-0.1, 0.3)
     glVertex2f(0.3, 0)
+    glVertex2f(-0.1, 0.3)
     glVertex2f(0.8, 1)
 
     glColor3f(0.5, 0.5, 0.0)
-    glVertex2f(-0.1, 0.3)
     glVertex2f(0.3, 0)
+    glVertex2f(-0.1, 0.3)
     glVertex2f(0.0, 0)
 
     glColor3f(0.471263322161369, 0.2974430471189735, 0.8830779091187262)
-    glVertex2f(-1, 0.7)
     glVertex2f(-0.1, 0.3)
     glVertex2f(0.0, 0)
+    glVertex2f(-1, 0.7)
 
     glColor3f(0, 0.5, 0.5)
     glVertex2f(-1, 0.7)
@@ -193,13 +193,13 @@ def draw_task7():
     glVertex2f(0.0, 0)
 
     glColor3f(0.5, 0, 0.5)
-    glVertex2f(-0.6, -0.5)
     glVertex2f(-1, 0.7)
+    glVertex2f(-0.6, -0.5)
     glVertex2f(-1, -1)
 
     glColor3f(1, 1, 1)
-    glVertex2f(-0.6, -0.5)
     glVertex2f(0, -1)
+    glVertex2f(-0.6, -0.5)
     glVertex2f(-1, -1)
 
     # glColor3f(0.2, 0.7, 0.4)
@@ -284,6 +284,8 @@ def main():
                     glShadeModel(GL_SMOOTH)
                 if event.key == pygame.K_w:
                     glShadeModel(GL_FLAT)
+                if event.key == pygame.K_8:
+                    task = 8
 
                 if task == 5:
                     if event.key == pygame.K_a:
@@ -292,6 +294,15 @@ def main():
                         version = 1
                     if event.key == pygame.K_d:
                         version = 2
+
+                if task == 8:
+                    if event.key == pygame.K_a:
+                        version = 3
+                    if event.key == pygame.K_s:
+                        version = 4
+                    if event.key == pygame.K_d:
+                        version = 5
+
 
 
                 elif event.key == pygame.K_UP:
@@ -304,14 +315,19 @@ def main():
         # Очистка экрана
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         if task == 1:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_points(vertices, point_size)
         elif task == 2:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_polygon(vertices)
         elif task == 3:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_task3()
         elif task == 4:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_task4()
         elif task == 5:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_triangle_fan()
             if version == 0:
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
@@ -323,11 +339,25 @@ def main():
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
                 draw_triangle_simple()
         elif task == 6:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_task6(n,radius)
 
 
         elif task == 7:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)  # Возврат к стандартному режиму
             draw_task7()
+        elif task == 8:
+            draw_task7()
+            if version == 3:
+                glPolygonMode(GL_FRONT, GL_POINT)
+                glPolygonMode(GL_BACK, GL_FILL)  # вернем режим к стандартному
+            if version == 4:
+                glPolygonMode(GL_FRONT, GL_FILL)  # вернем режим к стандартному
+                glPolygonMode(GL_BACK, GL_LINE)  # вернем режим к стандартному
+            if version == 5:
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
+
+
 
 
 
