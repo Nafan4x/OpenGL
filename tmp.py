@@ -1,3 +1,5 @@
+import time
+
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
@@ -45,11 +47,11 @@ def random_color():
 
 
 def draw_task3():
-    glBegin(GL_LINE_STRIP)  # Начинаем рисовать замкнутую ломаную линию
-    glVertex2f(-0.7, 1)  # Первая вершина
-    glVertex2f(-0.7, -1)  # Вторая вершина
-    glVertex2f(-0.2, -1)  # Третья вершина
-    glVertex2f(-0.5, -0.6)  # Четвертая вершина (автоматически замкнется на первую)
+    glBegin(GL_LINE_STRIP)
+    glVertex2f(-0.7, 1)
+    glVertex2f(-0.7, -1)
+    glVertex2f(-0.2, -1)
+    glVertex2f(-0.5, -0.6)
     glVertex2f(0.1, 0.6)
     glVertex2f(0.6, -0.2)
     glVertex2f(0.1, -1)
@@ -57,11 +59,11 @@ def draw_task3():
     glEnd()
 
 def draw_task4():
-    glBegin(GL_LINE_LOOP)  # Начинаем рисовать замкнутую ломаную линию
-    glVertex2f(0, 0)  # Первая вершина
-    glVertex2f(1, 0)  # Вторая вершина
-    glVertex2f(1, 0.7)  # Третья вершина
-    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+    glBegin(GL_LINE_LOOP)
+    glVertex2f(0, 0)
+    glVertex2f(1, 0)
+    glVertex2f(1, 0.7)
+    glVertex2f(0.3, 0.3)
     glVertex2f(-0.4, 0.7)
     glVertex2f(-1, 0.2)
     glVertex2f(-0.7, -0.7)
@@ -74,13 +76,13 @@ def draw_triangle_fan():
     glVertex2f(0.0, 0.0)  # Центральная вершина веера
 
     glColor3f(0.0, 1.0, 0.0)
-    glVertex2f(1, 0)  # Вторая вершина
+    glVertex2f(1, 0)
 
     glColor3f(0.0, 0.0, 1.0)
-    glVertex2f(1, 0.7)  # Третья вершина
+    glVertex2f(1, 0.7)
 
     glColor3f(0.5, 0.5, 0.0)
-    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+    glVertex2f(0.3, 0.3)
 
     glColor3f(0, 0.5, 0.5)
     glVertex2f(-0.4, 0.7)
@@ -130,35 +132,36 @@ def draw_triangle_strip():
 def draw_triangle_simple():
     glBegin(GL_TRIANGLES)
     glColor3f(0.0, 1.0, 0.0)
-    glVertex2f(1, 0)  # Вторая вершина
-    glVertex2f(1, 0.7)  # Третья вершина
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(1, 0)
+    glVertex2f(1, 0.7)
+    glVertex2f(0.0, 0.0)
 
     glColor3f(0.0, 0.0, 1.0)
-    glVertex2f(1, 0.7)  # Третья вершина
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
-    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+    glVertex2f(1, 0.7)
+    glVertex2f(0.0, 0.0)
+    glVertex2f(0.3, 0.3)
 
     glColor3f(1.0, 0.0, 0.0)
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
-    glVertex2f(0.3, 0.3)  # Четвертая вершина (автоматически замкнется на первую)
+    glVertex2f(0.0, 0.0)
+    glVertex2f(0.3, 0.3)
     glVertex2f(-0.4, 0.7)
 
     glColor3f(0, 0.5, 0.5)
     glVertex2f(-0.4, 0.7)
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.0, 0.0)
     glVertex2f(-1, 0.2)
 
     glColor3f(1, 1, 1)
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.0, 0.0)
     glVertex2f(-1, 0.2)
     glVertex2f(-0.7, -0.7)
 
     glColor3f(0.2, 0.7, 0.4)
     glVertex2f(-0.7, -0.7)
-    glVertex2f(0.0, 0.0)  # Центральная вершина веера
+    glVertex2f(0.0, 0.0)
     glVertex2f(0.2, -1)
     glEnd()
+
 
 def draw_task7():
     glBegin(GL_TRIANGLES)
@@ -202,43 +205,36 @@ def draw_task7():
     glVertex2f(-0.6, -0.5)
     glVertex2f(-1, -1)
 
-    # glColor3f(0.2, 0.7, 0.4)
-    # glVertex2f(-0.6, -0.5)
-    # glVertex2f(0, 0)
-    # glVertex2f(-1, 0.2)
 
     glEnd()
 def draw_task6(n, radius=0.5):
-    angle_step = 2 * pi / n  # Шаг угла для каждой вершины
+    angle_step = 2 * pi / n
     glBegin(GL_TRIANGLE_FAN)
 
-    # Центральная вершина многоугольника
     glColor3fv(random_color())
-    glVertex2f(0.0, 0.0)  # Центр
+    glVertex2f(0.0, 0.0)
 
-    # Вершины многоугольника по окружности
-    for i in range(n + 1):  # Проходим по каждой вершине (n + 1 чтобы замкнуть фигуру)
+    for i in range(n + 1):
         angle = i * angle_step
         x = radius * cos(angle)
         y = radius * sin(angle)
-        glColor3fv(random_color())  # Новый цвет для каждой вершины
+        glColor3fv(random_color())
         glVertex2f(x, y)
-
     glEnd()
 
 # Функция для отрисовки через ленту треугольников
 def draw_points(vertices, point_size):
     glPointSize(point_size)
     glBegin(GL_POINTS)
-    glColor3f(1.0, 1.0, 1.0)  # Красный цвет точек
+    glColor3f(1.0, 1.0, 1.0)
     for vertex in vertices:
         glVertex2f(vertex[0], vertex[1])
     glEnd()
 
 # Функция для рисования многоугольника с помощью линий
 def draw_polygon(vertices):
-    glBegin(GL_LINE_LOOP)  # Рисуем замкнутую ломаную линию
-    glColor3f(1.0, 1.0, 1.0)  # Красный цвет линий
+    glBegin(GL_LINE_LOOP)
+    glColor3f(1.0, 1.0, 1.0)
     for vertex in vertices:
         glVertex2f(vertex[0], vertex[1])
     glEnd()
@@ -350,10 +346,10 @@ def main():
             draw_task7()
             if version == 3:
                 glPolygonMode(GL_FRONT, GL_POINT)
-                glPolygonMode(GL_BACK, GL_FILL)  # вернем режим к стандартному
+                glPolygonMode(GL_BACK, GL_FILL)
             if version == 4:
-                glPolygonMode(GL_FRONT, GL_FILL)  # вернем режим к стандартному
-                glPolygonMode(GL_BACK, GL_LINE)  # вернем режим к стандартному
+                glPolygonMode(GL_FRONT, GL_FILL)
+                glPolygonMode(GL_BACK, GL_LINE)
             if version == 5:
                 glPolygonMode(GL_FRONT_AND_BACK, GL_LINE)
 
