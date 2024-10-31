@@ -79,10 +79,146 @@ def init():
     gluPerspective(45, (800/600), 0.1, 50.0)
     glTranslatef(0.0, 0.0, -5)
 
-
 # Функция для отрисовки фигур
 def draw_shapes():
     glDisable(GL_DEPTH_TEST)
+
+# Рисование n-угольника
+def draw_polygon(vertices):
+    glBegin(GL_LINE_LOOP)
+    for v in vertices:
+        glVertex2f(v[0], v[1])
+    glEnd()
+
+
+colors = [(1, 0, 0), (1, 1, 1), (1, 0, 1), (1, 1, 0), (0, 0, 1),(0, 1, 0)]
+# Рисование треугольников по вершинам n-угольника
+def draw_triangles(vertices):
+    glBegin(GL_TRIANGLES)
+    n = len(vertices)
+    for i in range(n):
+        glColor3f(*colors[i])
+        glVertex2f(vertices[i][0], vertices[i][1])
+        glVertex2f(vertices[(i + 1) % n][0], vertices[(i + 1) % n][1])
+        glVertex2f(0, 0)
+    glEnd()
+
+
+# Рисование пересекающихся линий
+def draw_intersecting_lines(vertices):
+    glBegin(GL_LINES)
+    n = len(vertices)
+    for i in range(n):
+        for j in range(i + 1, n):
+            glVertex2f(vertices[i][0], vertices[i][1])
+            glVertex2f(vertices[j][0], vertices[j][1])
+    glEnd()
+
+
+# Рисование линий, соединяющих четные вершины
+def draw_even_lines(vertices):
+    glBegin(GL_LINES)
+    for i in range(0, len(vertices), 2):
+        glVertex2f(vertices[i][0], vertices[i][1])
+        glVertex2f(vertices[(i + 2) % len(vertices)][0], vertices[(i + 2) % len(vertices)][1])
+    glEnd()
+
+
+# Функция для трансформаций и рисования фигур для задания 2
+def draw_task_2():
+    # Оригинальный треугольник
+    glColor3f(1, 0, 0)  # Красный
+    glBegin(GL_TRIANGLES)
+    glVertex2f(-0.5, -0.5)
+    glVertex2f(0.5, -0.5)
+    glVertex2f(0, 0.5)
+    glEnd()
+
+    # Масштабированный и сдвинутый треугольник
+    glColor3f(0, 1, 0)  # Зеленый
+    glPushMatrix()
+    glTranslatef(p[0], p[1], 0)
+    glScalef(kx, ky, 1)
+    glBegin(GL_TRIANGLES)
+    glVertex2f(-0.5, -0.5)
+    glVertex2f(0.5, -0.5)
+    glVertex2f(0, 0.5)
+    glEnd()
+    glPopMatrix()
+
+    # Оригинальный прямоугольник
+    glColor3f(0, 0, 1)  # Синий
+    glBegin(GL_QUADS)
+    glVertex2f(-0.5, -0.3)
+    glVertex2f(0.5, -0.3)
+    glVertex2f(0.5, 0.3)
+    glVertex2f(-0.5, 0.3)
+    glEnd()
+
+    
+    glPushMatrix()
+    glTranslatef(x, y, 0)
+    glRotatef(beta, 0, 0, 1)
+    glTranslatef(-x, -y, 0)
+    glBegin(GL_QUADS)
+    glVertex2f(-0.5, -0.3)
+    glVertex2f(0.5, -0.3)
+    glVertex2f(0.5, 0.3)
+    glVertex2f(-0.5, 0.3)
+    glEnd()
+    glPopMatrix()
+
+    # Оригинальная линия
+    glColor3f(1, 1, 0)  # Желтая
+    glBegin(GL_LINES)
+    glVertex2f(-1, -1)
+    glVertex2f(1, 1)
+    glEnd()
+
+    # Повернутая линия
+    glPushMatrix()
+    glRotatef(alpha, 0, 0, 1)
+    glBegin(GL_LINES)
+    glVertex2f(-1, -1)
+    glVertex2f(1, 1)
+    glEnd()
+    glPopMatrix()
+
+
+
+def draw_line(x1, y1, x2, y2):
+    glBegin(GL_LINES)
+    glVertex2f(x1, y1)
+    glVertex2f(x2, y2)
+    glEnd()
+
+
+def draw_right_side():
+    glColor3f(1, 1, 1)
+
+    draw_line(0, 0, 1, 0.5)
+    draw_line(1, 0.5, 1, 0)
+    draw_line(1, 0, 0, 0)
+
+    draw_line(0, 0, -0.7, -0.7)
+    draw_line(-0.7, -0.7, -0.4, -1)
+    draw_line(-0.4, -1, 0,0)
+
+
+def draw_shape():
+    draw_right_side()
+    glPushMatrix()
+    glScalef(-1, 1, 1)
+    draw_right_side()
+    glPopMatrix()
+
+# Функция для рисования креста (задание 3)
+def draw_cross():
+   draw_shape()
+
+# Основная функция отображения
+def display(current_task):
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     # Рисуем первый треугольник

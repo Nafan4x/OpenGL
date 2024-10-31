@@ -295,6 +295,7 @@ def draw_polygon(vertices):
     glEnd()
 
 
+
 def main():
     n = 6 # Количество вершин n-угольника
     radius = 0.5  # Радиус многоугольника
