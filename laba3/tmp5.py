@@ -1,64 +1,12 @@
-import pygame
-from pygame.locals import *
-from OpenGL.GL import *
-from OpenGL.GLU import *
-
-# Координаты вершин куба
-cube_vertices = [
-    (-1, -1, -1), (1, -1, -1), (1, 1, -1), (-1, 1, -1),  # Задняя грань
-    (-1, -1, 1), (1, -1, 1), (1, 1, 1), (-1, 1, 1)       # Передняя грань
-]
-
-# Ребра куба (индексы вершин, соединяющие каждую пару)
-cube_edges = [
-    (0, 1), (1, 2), (2, 3), (3, 0),  # Задняя грань
-    (4, 5), (5, 6), (6, 7), (7, 4),  # Передняя грань
-    (0, 4), (1, 5), (2, 6), (3, 7)   # Соединение передней и задней граней
-]
-
-# Функция для инициализации OpenGL с перспективной проекцией
-def init():
-    glClearColor(0.1, 0.1, 0.1, 1)
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    gluPerspective(45, (800 / 600), 0.1, 50.0)  # Установка перспективной проекции
-    glMatrixMode(GL_MODELVIEW)
-    glTranslatef(0.0, 0.0, -5)  # Перемещаем куб ближе к центру видового объема
-
-# Функция для отрисовки каркасного изображения куба
-def draw_wireframe_cube():
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glColor3f(1, 1, 1)  # Белый цвет для каркаса куба
-    glBegin(GL_LINES)
-
-    # Рисуем ребра куба
-    for edge in cube_edges:
-        for vertex in edge:
-            glVertex3fv(cube_vertices[vertex])
-
-    glEnd()
-
-# Главная функция для запуска визуализации
-def main():
-    pygame.init()
-    pygame.display.set_mode((800, 600), DOUBLEBUF | OPENGL)
-    init()
-    glEnable(GL_DEPTH_TEST)  # Включение буфера глубины
-
-    # Основной цикл для отрисовки и взаимодействия
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        # Поворот куба для лучшего обзора
-        #glRotatef(1, 3, 1, 1)
-        draw_wireframe_cube()
-        pygame.display.flip()
-        pygame.time.wait(10)
-
-    pygame.quit()
-
-if __name__ == "__main__":
-    main()
+x1, x2, x3 = 100000, 10000, 1000
+m = 9999999999999
+for i in range(0, 7692):
+    for j in range(0, 7692):
+        for k in range(0, 7692):
+            t1 , t2, t3 = i/10000000, j/10000000, k/10000000
+            if (20*t1 + 15*t2 + 10*t3) >= 1 and (16*t1 + 12*t2 + 14*t3) >= 1 and (13*t1 + 18*t2 + 15*t3) >= 1:
+                if t1 + t2 + t3 < m:
+                    x1 , x2 ,x3 = t1, t2, t3
+                    m = t1 + t2+ t3
+                    print(x1, x2, x3, m)
+print(x1, x2, x3, m)
