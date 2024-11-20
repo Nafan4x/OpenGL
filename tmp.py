@@ -357,7 +357,6 @@ def main():
 
 
 
-
         # Обновляем экран
         pygame.display.flip()
         pygame.time.wait(10)
