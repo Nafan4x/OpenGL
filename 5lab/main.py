@@ -1,21 +1,22 @@
+from math import cos, radians, sin
+
 import pygame
 from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import pywavefront
 
-# Параметры камеры
-FOV = 30  # Угол вертикального обзора
-NEAR_CLIP = 6  # Передняя плоскость отсечения
-FAR_CLIP = 100  # Задняя плоскость отсечения
 
-# Начальная позиция камеры и объекта
+FOV = 35
+NEAR_CLIP = 6
+FAR_CLIP = 12
+
 camera_distance = 10
 camera_angle = 0
 object_rotation = 0
 object_position_x = 0
+object_position_z = 0
 
-# Инициализация Pygame и OpenGL
 pygame.init()
 display = (800, 600)
 pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
@@ -86,7 +87,7 @@ while running:
     # Считывание состояния клавиш
     keys = pygame.key.get_pressed()
 
-    # Управление объектом и камерой
+
     if keys[K_LEFT]:
         camera_angle += 5
     if keys[K_RIGHT]:
@@ -96,9 +97,11 @@ while running:
     if keys[K_DOWN]:
         camera_distance += 0.5
     if keys[K_a]:
-        object_position_x -= 0.1
+        object_position_x -= 0.1 * cos(radians(camera_angle))
+        object_position_z -= 0.1 * sin(radians(camera_angle))
     if keys[K_d]:
-        object_position_x += 0.1
+        object_position_x += 0.1 * cos(radians(camera_angle))
+        object_position_z += 0.1 * sin(radians(camera_angle))
     if keys[K_w]:
         object_rotation += 5
     if keys[K_s]:
@@ -120,7 +123,7 @@ while running:
 
     # Рисуем объект (тележку)
     glPushMatrix()
-    glTranslatef(object_position_x, 0, 0)
+    glTranslatef(object_position_x, 0, object_position_z)
     glRotatef(object_rotation, 0, 1, 0)
     draw_model()  # Используем список отображения
     glPopMatrix()
